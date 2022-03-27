@@ -9,3 +9,5 @@ To see the code from a specific episode look at the commits.
 [Ep. 3 2D Graphics [Youtube Video]](https://youtu.be/JWnhgWEmO10)
 
 [Ep. 4 Keyboard Input Handling [Youtube Video]](https://youtu.be/BogrUrFuQ6A)
+
+[Ep. 5 Mouse Input Handling [Youtube Video]](https://youtu.be/hNlpfNgcyPs)
