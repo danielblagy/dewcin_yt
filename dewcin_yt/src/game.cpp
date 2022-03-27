@@ -51,6 +51,23 @@ namespace dewcin
 			Input::processKeyboardInput(VKCode, wasDown, isDown);
 		}break;
 
+		case WM_LBUTTONDOWN:
+		case WM_LBUTTONUP:
+		case WM_RBUTTONDOWN:
+		case WM_RBUTTONUP:
+		case WM_MBUTTONDOWN:
+		case WM_MBUTTONUP:
+		case WM_XBUTTONDOWN:
+		case WM_XBUTTONUP:
+		{
+			Input::processMouseInput(wParam, lParam);
+		} break;
+
+		case WM_MOUSEMOVE:
+		{
+			Input::updateMousePosition(lParam);
+		} break;
+
 		case WM_PAINT:
 		{
 			OutputDebugString(L"window paint\n");

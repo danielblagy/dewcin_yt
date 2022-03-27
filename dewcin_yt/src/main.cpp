@@ -25,6 +25,13 @@ dewcin_app_entry_point
 			x -= 10;
 		else if (dewcin::Input::isKeyPressed(DC_RIGHT))
 			x += 10;
+
+		if (dewcin::Input::isMouseButtonPressed(DC_MOUSE_MIDDLE))
+			OutputDebugString(L"mouse middle button pressed!\n");
+
+		dewcin::Input::Position mousePosition = dewcin::Input::getMousePosition();
+		swprintf(charBuffer, 256, L"%d, %d\n", mousePosition.x, mousePosition.y);
+		OutputDebugString(charBuffer);
 	}
 	);
 

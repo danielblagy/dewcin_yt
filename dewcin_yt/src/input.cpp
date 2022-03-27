@@ -3,6 +3,7 @@
 namespace dewcin
 {
 	Input::KeyboardInputMap Input::keyboard;
+	Input::MouseInputMap Input::mouse;
 	
 	Input::KeyState Input::getKeyState(uint32_t keycode)
 	{
@@ -122,5 +123,50 @@ namespace dewcin
 				keyboard.keys[DC_TILDE].wasDown = wasDown;
 			}
 		}
+	}
+
+
+	Input::Position Input::getMousePosition()
+	{
+		return mouse.position;
+	}
+
+	bool Input::isMouseButtonPressed(unsigned int buttonCode)
+	{
+		return mouse.buttons[buttonCode].isDown;
+	}
+
+	bool Input::isMouseButtonReleased(unsigned int buttonCode)
+	{
+		return !mouse.buttons[buttonCode].isDown;
+	}
+
+	// returns true if the mouse button has just been pressed
+	bool Input::wasMouseButtonHit(unsigned int buttonCode)
+	{
+		return (!mouse.buttons[buttonCode].wasDown) && mouse.buttons[buttonCode].isDown;
+	}
+
+	void Input::processMouseInput(WPARAM wParam, LPARAM lParam)
+	{
+		mouse.buttons[DC_MOUSE_LEFT].wasDown = mouse.buttons[DC_MOUSE_LEFT].isDown;
+		mouse.buttons[DC_MOUSE_RIGHT].wasDown = mouse.buttons[DC_MOUSE_RIGHT].isDown;
+		mouse.buttons[DC_MOUSE_MIDDLE].wasDown = mouse.buttons[DC_MOUSE_MIDDLE].isDown;
+		mouse.buttons[DC_MOUSE_X1].wasDown = mouse.buttons[DC_MOUSE_X1].isDown;
+		mouse.buttons[DC_MOUSE_X2].wasDown = mouse.buttons[DC_MOUSE_X2].isDown;
+
+		mouse.buttons[DC_MOUSE_LEFT].isDown = wParam & MK_LBUTTON;
+		mouse.buttons[DC_MOUSE_RIGHT].isDown = wParam & MK_RBUTTON;
+		mouse.buttons[DC_MOUSE_MIDDLE].isDown = wParam & MK_MBUTTON;
+		mouse.buttons[DC_MOUSE_X1].isDown = wParam & MK_XBUTTON1;
+		mouse.buttons[DC_MOUSE_X2].isDown = wParam & MK_XBUTTON2;
+
+		updateMousePosition(lParam);
+	}
+
+	void Input::updateMousePosition(LPARAM lParam)
+	{
+		mouse.position.x = GET_X_LPARAM(lParam);
+		mouse.position.y = GET_Y_LPARAM(lParam);
 	}
 }
