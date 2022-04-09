@@ -4,6 +4,8 @@ The tutorial on making this game framework is [on Youtube](https://youtube.com/p
 
 To see the code from a specific episode look at the commits.
 
+[Ep. 1 Introduction [Youtube Video]](https://youtu.be/mJlwQf5ZUq0)
+
 [Ep. 2 Main Loop & Window [Youtube Video]](https://youtu.be/ZdtMJPJx9jk)
 
 [Ep. 3 2D Graphics [Youtube Video]](https://youtu.be/JWnhgWEmO10)
