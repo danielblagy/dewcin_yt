@@ -13,3 +13,5 @@ To see the code from a specific episode look at the commits.
 [Ep. 4 Keyboard Input Handling [Youtube Video]](https://youtu.be/BogrUrFuQ6A)
 
 [Ep. 5 Mouse Input Handling [Youtube Video]](https://youtu.be/hNlpfNgcyPs)
+
+[Ep. 6 How To Use Delta Time [Youtube Video]](https://youtu.be/OW-fukWgXDI)
