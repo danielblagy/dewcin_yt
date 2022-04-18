@@ -48,6 +48,124 @@ namespace dewcin
 		}
 	}
 
+	void Renderer::DrawRectangle(const Rect& rect, const RGBColor& color)
+	{
+		BitmapBuffer& buffer = getInstance().buffer;
+
+		int minX = rect.x;
+		int minY = rect.y;
+		int maxX = rect.x + rect.width;
+		int maxY = rect.y + rect.height;
+
+		// clipping
+		if (minX < 0)				minX = 0;
+		if (minY < 0)				minY = 0;
+		if (maxX > buffer.width)	maxX = buffer.width;
+		if (maxY > buffer.height)	maxY = buffer.height;
+
+		for (int x = minX; x <= maxX; x++)
+		{
+			SetPixel(x, minY, color);
+			SetPixel(x, maxY, color);
+		}
+
+		for (int y = minY; y <= maxY; y++)
+		{
+			SetPixel(minX, y, color);
+			SetPixel(maxX, y, color);
+		}
+	}
+
+	void Renderer::plotLineLow(int x0, int y0, int x1, int y1, const RGBColor& color)
+	{
+		int dx = x1 - x0;
+		int dy = y1 - y0;
+		int yi = 1;
+		if (dy < 0)
+		{
+			yi = -1;
+			dy = -dy;
+		}
+		int D = (2 * dy) - dx;
+		int y = y0;
+
+		for (int x = x0; x <= x1; x++)
+		{
+			SetPixel(x, y, color);
+			if (D > 0)
+			{
+				y = y + yi;
+				D = D + (2 * (dy - dx));
+			}
+			else
+			{
+				D = D + 2 * dy;
+			}
+		}
+	}
+
+	void Renderer::plotLineHigh(int x0, int y0, int x1, int y1, const RGBColor& color)
+	{
+		int dx = x1 - x0;
+		int dy = y1 - y0;
+		int xi = 1;
+		if (dx < 0)
+		{
+			xi = -1;
+			dx = -dx;
+		}
+		int D = (2 * dx) - dy;
+		int x = x0;
+
+		for (int y = y0; y <= y1; y++)
+		{
+			SetPixel(x, y, color);
+			if (D > 0)
+			{
+				x = x + xi;
+				D = D + (2 * (dx - dy));
+			}
+			else
+			{
+				D = D + 2 * dx;
+			}
+		}
+	}
+
+	void Renderer::DrawLine(int x0, int y0, int x1, int y1, const RGBColor& color)
+	{
+		if (abs(y1 - y0) < abs(x1 - x0))
+		{
+			if (x0 > x1)
+				plotLineLow(x1, y1, x0, y0, color);
+			else
+				plotLineLow(x0, y0, x1, y1, color);
+		}
+		else
+		{
+			if (y0 > y1)
+				plotLineHigh(x1, y1, x0, y0, color);
+			else
+				plotLineHigh(x0, y0, x1, y1, color);
+		}
+	}
+
+	void Renderer::DrawCircle(int radius, int originX, int originY, const RGBColor& color)
+	{
+		for (int y = -radius; y <= radius; y++)
+			for (int x = -radius; x <= radius; x++)
+				if (x * x + y * y > radius * radius - radius && x * x + y * y < radius * radius + radius)
+					SetPixel(originX + x, originY + y, color);
+	}
+	
+	void Renderer::FillCircle(int radius, int originX, int originY, const RGBColor& color)
+	{
+		for (int y = -radius; y <= radius; y++)
+			for (int x = -radius; x <= radius; x++)
+				if (x * x + y * y < radius * radius + radius)
+					SetPixel(originX + x, originY + y, color);
+	}
+
 	void Renderer::getWindowDimensions(int* outWidth, int* outHeight)
 	{
 		RECT clientRect;

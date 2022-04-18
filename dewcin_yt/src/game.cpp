@@ -109,6 +109,16 @@ namespace dewcin
 			return;
 		}
 
+		DWORD windowStyle = WS_MAXIMIZEBOX | WS_SYSMENU | WS_CAPTION;
+
+		RECT windowRect = {};
+		windowRect.left = 0;
+		windowRect.top = 0;
+		windowRect.right = windowWidth;
+		windowRect.bottom = windowHeight;
+
+		AdjustWindowRect(&windowRect, windowStyle, false);
+
 		windowHandle = CreateWindowEx(
 			0,
 			className,
@@ -116,8 +126,8 @@ namespace dewcin
 			WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 			CW_USEDEFAULT,
 			CW_USEDEFAULT,
-			windowWidth,
-			windowHeight,
+			windowRect.right - windowRect.left,
+			windowRect.bottom - windowRect.top,
 			0,
 			0,
 			hInstance,
